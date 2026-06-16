@@ -50,3 +50,16 @@ jobs:
           git commit -m "Auto Update: บันทึกข้อมูล Facebook Traffic ล่าสุด"
           git push
         fi
+
+        # ... existing code ...
+  workflow_dispatch:
+    # อนุญาตให้เรากดปุ่มรันระบบด้วยตัวเองได้ตลอดเวลา
+
+# เพิ่มบล็อกนี้เพื่อให้ GitHub Actions มีสิทธิ์ในการเขียนไฟล์และ Commit
+permissions:
+  contents: write
+
+jobs:
+  run-sync:
+    runs-on: ubuntu-latest
+# ... existing code ...
