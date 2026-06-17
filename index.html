@@ -329,26 +329,31 @@
 
     <!-- Data Detail Table -->
     <div class="table-card" style="margin-top:24px;">
-      <div class="table-header">
-        <div>
-          <div class="chart-title">Ad Performance</div>
+      <div class="table-header" style="flex-direction: column; align-items: flex-start;">
+        <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+          <div class="chart-title">Performance Details</div>
           <div class="chart-sub" id="tableCount" style="margin-bottom:0;"></div>
+        </div>
+        
+        <!-- Table View Tabs -->
+        <div class="platform-tabs" id="tableTabs" style="border-top: none; padding-top: 8px; margin-bottom: 8px; width: 100%;">
+          <button id="tab-table-campaign" class="platform-tab active" onclick="switchTableView('campaign')">Campaign Performance</button>
+          <button id="tab-table-adset" class="platform-tab" onclick="switchTableView('adset')">Ad Set Performance</button>
+          <button id="tab-table-ad" class="platform-tab" onclick="switchTableView('ad')">Ad Performance</button>
         </div>
       </div>
       <div class="table-responsive">
         <table>
           <thead><tr>
-            <th class="sortable" onclick="handleSort('ad')">Ad Name <span class="sort-icon" id="sortIcon-ad"></span></th>
+            <th class="sortable" onclick="handleSort('name')"><span id="th-name-label">Campaign Name</span> <span class="sort-icon" id="sortIcon-name"></span></th>
             <th class="sortable" onclick="handleSort('spend')">Spend (฿) <span class="sort-icon" id="sortIcon-spend"></span></th>
-            <th class="sortable" onclick="handleSort('roas')">ROAS <span class="sort-icon" id="sortIcon-roas"></span></th>
-            <th class="sortable" onclick="handleSort('purchases')">Purchases <span class="sort-icon" id="sortIcon-purchases"></span></th>
-            <th class="sortable" onclick="handleSort('cpa')">CPA (฿) <span class="sort-icon" id="sortIcon-cpa"></span></th>
-            <th class="sortable" onclick="handleSort('convValue')">Conv. Value (฿) <span class="sort-icon" id="sortIcon-convValue"></span></th>
-            <th class="sortable" onclick="handleSort('clicks')">Link Clicks <span class="sort-icon" id="sortIcon-clicks"></span></th>
-            <th class="sortable" onclick="handleSort('lpViews')">LP Views <span class="sort-icon" id="sortIcon-lpViews"></span></th>
-            <th class="sortable" onclick="handleSort('addCart')">Adds to Cart <span class="sort-icon" id="sortIcon-addCart"></span></th>
             <th class="sortable" onclick="handleSort('reach')">Reach <span class="sort-icon" id="sortIcon-reach"></span></th>
             <th class="sortable" onclick="handleSort('impressions')">Impressions <span class="sort-icon" id="sortIcon-impressions"></span></th>
+            <th class="sortable" onclick="handleSort('clicks')">Link Clicks <span class="sort-icon" id="sortIcon-clicks"></span></th>
+            <th class="sortable" onclick="handleSort('addCart')">Adds to Cart <span class="sort-icon" id="sortIcon-addCart"></span></th>
+            <th class="sortable" onclick="handleSort('purchases')">Purchases <span class="sort-icon" id="sortIcon-purchases"></span></th>
+            <th class="sortable" onclick="handleSort('convValue')">Conv. Value (฿) <span class="sort-icon" id="sortIcon-convValue"></span></th>
+            <th class="sortable" onclick="handleSort('roas')">ROAS <span class="sort-icon" id="sortIcon-roas"></span></th>
           </tr></thead>
           <tbody id="tableBody"></tbody>
         </table>
@@ -404,7 +409,11 @@
 const initialCSVData = `"Campaign name","Ad set name","Age","Gender","Amount spent (THB)","Reach","Impressions","Link clicks","Landing page views","Website adds to cart","Website purchases","Website purchases conversion value"`;
 
 let currentPlatform = 'facebook';
-let currentMonth = 'January';
+
+// คำนวณหาเดือนปัจจุบันแบบอัตโนมัติ
+const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+let currentMonth = monthNames[new Date().getMonth()]; 
+
 let currentSource = 'ไม่มีข้อมูล';
 
 const ALL_MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -603,32 +612,32 @@ function renderTrendCharts() {
     charts.trend1 = new Chart(document.getElementById('trendChart1'), {
         type: 'bar',
         data: { labels, datasets: [
-            { label: 'Spending', data: spends, backgroundColor: '#3B82F6', yAxisID: 'y', borderRadius: 4 },
-            { label: 'Conv. Value', data: convVals, type: 'line', borderColor: '#10B981', backgroundColor: '#10B981', yAxisID: 'y1', tension: 0.3, borderWidth: 2 }
+            { label: 'Spending', data: spends, backgroundColor: '#3B82F6', yAxisID: 'y', borderRadius: 4, order: 2 },
+            { label: 'Conv. Value', data: convVals, type: 'line', borderColor: '#10B981', backgroundColor: '#10B981', yAxisID: 'y1', tension: 0.3, borderWidth: 2, order: 1 }
         ]}, options: dualOpts('Spending (฿)', 'Conv. Value (฿)')
     });
 
     charts.trend2 = new Chart(document.getElementById('trendChart2'), {
         type: 'bar',
         data: { labels, datasets: [
-            { label: 'Spending', data: spends, backgroundColor: '#3B82F6', yAxisID: 'y', borderRadius: 4 },
-            { label: 'CPC', data: cpcs, type: 'line', borderColor: '#F59E0B', backgroundColor: '#F59E0B', yAxisID: 'y1', tension: 0.3, borderWidth: 2 }
+            { label: 'Spending', data: spends, backgroundColor: '#3B82F6', yAxisID: 'y', borderRadius: 4, order: 2 },
+            { label: 'CPC', data: cpcs, type: 'line', borderColor: '#F59E0B', backgroundColor: '#F59E0B', yAxisID: 'y1', tension: 0.3, borderWidth: 2, order: 1 }
         ]}, options: dualOpts('Spending (฿)', 'CPC (฿)')
     });
 
     charts.trend3 = new Chart(document.getElementById('trendChart3'), {
         type: 'bar',
         data: { labels, datasets: [
-            { label: 'Purchases', data: purchases, backgroundColor: '#8B5CF6', yAxisID: 'y', borderRadius: 4 },
-            { label: 'Conv. Rate (%)', data: crs, type: 'line', borderColor: '#EC4899', backgroundColor: '#EC4899', yAxisID: 'y1', tension: 0.3, borderWidth: 2 }
+            { label: 'Purchases', data: purchases, backgroundColor: '#8B5CF6', yAxisID: 'y', borderRadius: 4, order: 2 },
+            { label: 'Conv. Rate (%)', data: crs, type: 'line', borderColor: '#EC4899', backgroundColor: '#EC4899', yAxisID: 'y1', tension: 0.3, borderWidth: 2, order: 1 }
         ]}, options: dualOpts('Purchases', 'Conversion Rate (%)')
     });
 
     charts.trend4 = new Chart(document.getElementById('trendChart4'), {
         type: 'bar',
         data: { labels, datasets: [
-            { label: 'Conv. Value', data: convVals, backgroundColor: '#10B981', yAxisID: 'y', borderRadius: 4 },
-            { label: 'ROAS', data: roases, type: 'line', borderColor: '#F43F5E', backgroundColor: '#F43F5E', yAxisID: 'y1', tension: 0.3, borderWidth: 2 }
+            { label: 'Conv. Value', data: convVals, backgroundColor: '#10B981', yAxisID: 'y', borderRadius: 4, order: 2 },
+            { label: 'ROAS', data: roases, type: 'line', borderColor: '#F43F5E', backgroundColor: '#F43F5E', yAxisID: 'y1', tension: 0.3, borderWidth: 2, order: 1 }
         ]}, options: dualOpts('Conv. Value (฿)', 'ROAS (x)')
     });
 }
@@ -861,7 +870,6 @@ function renderSalesSummary() {
 const COLORS = ['#3B82F6','#10B981','#F59E0B','#8B5CF6','#F43F5E','#06B6D4','#64748B'];
 
 function renderCharts() {
-  destroyCharts();
   const isDark = document.body.classList.contains('dark-mode');
   const textColor = isDark ? '#F8FAFC' : '#111827';
   const d = filteredData;
@@ -906,6 +914,7 @@ function renderCharts() {
     'unknown': '#94A3B8' /* สีเทา */
   };
 
+  if(charts.demo) charts.demo.destroy();
   charts.demo = new Chart(document.getElementById('demoChart'), {
     type:'bar',
     data:{
@@ -954,39 +963,35 @@ function renderCharts() {
     const demoSumEl = document.getElementById('demoSummary');
     if(demoSumEl) demoSumEl.style.display = 'none';
   }
-
-  // Ad Pie Chart - Spend by Ad
-  const sortedAdSpend = Object.entries(adStats).sort((a,b)=>b[1].spend-a[1].spend);
-  const adLabels = sortedAdSpend.map(item => item[0]);
-  const adData = sortedAdSpend.map(item => item[1].spend);
-
-  charts.adPie = new Chart(document.getElementById('adPieChart'), {
-    type: 'doughnut',
-    data: {
-      labels: adLabels,
-      datasets: [{
-        data: adData,
-        backgroundColor: adLabels.map((_, i) => COLORS[i % COLORS.length]),
-        borderWidth: 2, borderColor: isDark ? '#1E293B' : '#FFF', hoverOffset: 8
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false, cutout: '50%',
-      plugins: { legend: { position: 'right', labels: { color: textColor, font: { family: 'Inter,Noto Sans Thai', size: 11 } } } }
-    }
-  });
 }
 
 // ─── TABLE ─────────────────────────────────
-let currentSortCol = 'roas';
+let currentTableView = 'campaign'; // ค่าเริ่มต้นของตาราง
+let currentSortCol = 'spend';
 let currentSortAsc = false;
+
+window.switchTableView = function(view) {
+  currentTableView = view;
+  
+  // อัปเดตสถานะปุ่ม Tab
+  document.querySelectorAll('#tableTabs .platform-tab').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-table-' + view).classList.add('active');
+  
+  // อัปเดตชื่อหัวตารางคอลัมน์แรก
+  const thName = document.getElementById('th-name-label');
+  if(view === 'campaign') thName.textContent = 'Campaign Name';
+  if(view === 'adset') thName.textContent = 'Ad Set Name';
+  if(view === 'ad') thName.textContent = 'Ad Name';
+
+  renderTable();
+};
 
 window.handleSort = function(col) {
   if (currentSortCol === col) {
     currentSortAsc = !currentSortAsc;
   } else {
     currentSortCol = col;
-    currentSortAsc = col === 'ad' ? true : false;
+    currentSortAsc = col === 'name' ? true : false;
   }
   renderTable();
 };
@@ -996,27 +1001,30 @@ function renderTable() {
   const groupedObj = {};
   
   d.forEach(r => {
-    if (!groupedObj[r.ad]) {
-      groupedObj[r.ad] = {
-        ad: r.ad, spend: 0, reach: 0, impressions: 0,
-        clicks: 0, lpViews: 0, addCart: 0, purchases: 0, convValue: 0
+    // เลือกคีย์สำหรับการจัดกลุ่ม (Grouping Dimension) ตาม Tab ที่กดเลือก
+    let key = r.campaign || 'Unknown';
+    if (currentTableView === 'adset') key = r.adset || 'Unknown';
+    if (currentTableView === 'ad') key = r.ad || 'Unknown';
+
+    if (!groupedObj[key]) {
+      groupedObj[key] = {
+        name: key, spend: 0, reach: 0, impressions: 0,
+        clicks: 0, addCart: 0, purchases: 0, convValue: 0
       };
     }
-    groupedObj[r.ad].spend += r.spend;
-    groupedObj[r.ad].reach += r.reach;
-    groupedObj[r.ad].impressions += r.impressions;
-    groupedObj[r.ad].clicks += r.clicks;
-    groupedObj[r.ad].lpViews += r.lpViews;
-    groupedObj[r.ad].addCart += r.addCart;
-    groupedObj[r.ad].purchases += r.purchases;
-    groupedObj[r.ad].convValue += r.convValue;
+    groupedObj[key].spend += r.spend;
+    groupedObj[key].reach += r.reach;
+    groupedObj[key].impressions += r.impressions;
+    groupedObj[key].clicks += r.clicks;
+    groupedObj[key].addCart += r.addCart;
+    groupedObj[key].purchases += r.purchases;
+    groupedObj[key].convValue += r.convValue;
   });
 
   // Derived metrics
   let tableData = Object.values(groupedObj).map(r => ({
     ...r,
-    roas: r.spend > 0 ? r.convValue / r.spend : 0,
-    cpa: r.purchases > 0 ? r.spend / r.purchases : 0
+    roas: r.spend > 0 ? r.convValue / r.spend : 0
   }));
 
   // Sort
@@ -1028,7 +1036,7 @@ function renderTable() {
   });
 
   // Update Icons
-  const cols = ['ad','spend','roas','purchases','cpa','convValue','clicks','lpViews','addCart','reach','impressions'];
+  const cols = ['name','spend','reach','impressions','clicks','addCart','purchases','convValue','roas'];
   cols.forEach(c => {
     const el = document.getElementById(`sortIcon-${c}`);
     if (el) el.innerHTML = c === currentSortCol ? (currentSortAsc ? '▲' : '▼') : '';
@@ -1037,17 +1045,15 @@ function renderTable() {
   document.getElementById('tableCount').textContent = `แสดง ${tableData.length} รายการ`;
   document.getElementById('tableBody').innerHTML = tableData.map(r => `
     <tr>
-      <td title="${r.ad}" style="max-width:240px; overflow: hidden; text-overflow: ellipsis;">${r.ad}</td>
+      <td title="${r.name}" style="max-width:240px; overflow: hidden; text-overflow: ellipsis;">${r.name}</td>
       <td class="cost-cell">฿${formatNum(r.spend)}</td>
-      <td class="num" style="color:var(--emerald);font-weight:600;">${r.roas.toFixed(2)}x</td>
-      <td class="num">${r.purchases.toLocaleString()}</td>
-      <td class="num">฿${formatNum(r.cpa)}</td>
-      <td class="num">฿${formatNum(r.convValue)}</td>
-      <td class="num">${r.clicks.toLocaleString()}</td>
-      <td class="num">${r.lpViews.toLocaleString()}</td>
-      <td class="num">${r.addCart.toLocaleString()}</td>
       <td class="num">${r.reach.toLocaleString()}</td>
       <td class="num">${r.impressions.toLocaleString()}</td>
+      <td class="num">${r.clicks.toLocaleString()}</td>
+      <td class="num">${r.addCart.toLocaleString()}</td>
+      <td class="num">${r.purchases.toLocaleString()}</td>
+      <td class="num">฿${formatNum(r.convValue)}</td>
+      <td class="num" style="color:var(--emerald);font-weight:600;">${r.roas.toFixed(2)}x</td>
     </tr>
   `).join('');
 }
@@ -1116,8 +1122,9 @@ function loadData(rows, isInitial = false, sourceName = '') {
   try {
     // Parser is generic enough to handle common FB/Google headers
     const parsedData = rows.map(r => ({
-      campaign: r['Campaign name'] || r['Campaign'] || '',
-      ad: (r['Ad name'] || r['Ad'] || r['Ad set name'] || r['Ad group'] || '').trim(),
+      campaign: (r['Campaign name'] || r['Campaign'] || 'Unknown Campaign').trim(),
+      adset: (r['Ad set name'] || r['Ad group'] || 'Unknown Ad Set').trim(),
+      ad: (r['Ad name'] || r['Ad'] || 'Unknown Ad').trim(),
       age: r['Age'] || 'Unknown',
       gender: r['Gender'] || 'Unknown',
       spend: parseFloat(r['Amount spent (THB)'] || r['Cost'] || 0) || 0,
