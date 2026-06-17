@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aurora Diamond - Traffic & Conversion Dashboard</title>
+  <title>Website | Traffic Ads Performance</title>
 
   <!-- External Libraries (Switched to jsDelivr for better compression stability) -->
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
@@ -42,22 +42,17 @@
     body { background: var(--bg); color: var(--text); font-family: 'Inter','Noto Sans Thai',sans-serif; min-height: 100vh; line-height: 1.5; }
 
     /* Header & Navigation */
-    .header { background: var(--card); border-bottom: 1px solid var(--border); padding: 16px 32px 0 32px; display: flex; flex-direction: column; position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow-sm); }
-    .header-top { display: flex; align-items: center; justify-content: space-between; padding-bottom: 16px; width: 100%; }
+    .header { background: var(--card); border-bottom: 1px solid var(--border); padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow-sm); }
     .logo-area { display: flex; align-items: center; gap: 16px; }
     .logo-icon { width: 50px; height: 50px; border-radius: 12px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); background: var(--surface); box-shadow: var(--shadow-sm); color: var(--primary); }
     .logo-icon svg { width: 28px; height: 28px; }
     .logo-title { font-size: 20px; font-weight: 700; color: var(--text); letter-spacing: -0.5px; }
     .logo-sub { font-size: 13px; color: var(--muted); font-weight: 500; }
     .header-right { display: flex; align-items: center; gap: 16px; }
-    .date-badge { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; font-size: 13px; font-weight: 500; color: var(--text-secondary); }
     
-    .platform-tabs { display: flex; gap: 24px; border-top: 1px solid var(--border); padding-top: 8px; }
-    .platform-tab { background: transparent; border: none; font-family: 'Inter', 'Noto Sans Thai', sans-serif; font-size: 14px; font-weight: 600; color: var(--text-secondary); cursor: pointer; padding: 10px 4px; border-bottom: 2px solid transparent; transition: all .2s; display: flex; align-items: center; gap: 6px; }
-    .platform-tab svg { width: 16px; height: 16px; opacity: 0.7; }
-    .platform-tab.active { color: var(--primary); border-bottom-color: var(--primary); }
-    .platform-tab.active svg { opacity: 1; }
-    .platform-tab:hover:not(.active) { color: var(--text); }
+    .header-select { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; color: var(--text); padding: 8px 32px 8px 16px; font-size: 14px; font-weight: 600; font-family: 'Inter','Noto Sans Thai',sans-serif; outline: none; cursor: pointer; transition: border-color .2s; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2364748B' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; box-shadow: var(--shadow-sm); min-width: 150px; }
+    body.dark-mode .header-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2394A3B8' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+    .header-select:focus { border-color: var(--primary); }
 
     .main { padding: 18px 64px; max-width: 1440px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
 
@@ -171,9 +166,8 @@
     .main { padding: 16px; gap: 16px; }
     .charts-grid { grid-template-columns: 1fr; }
     .chart-card.wide { grid-column: span 1; }
-    .header { padding: 16px 16px 0 16px; flex-direction: column; align-items: flex-start; }
-    .header-top { flex-direction: column; align-items: flex-start; gap: 16px; padding-bottom: 12px; }
-    .platform-tabs { width: 100%; overflow-x: auto; gap: 16px; }
+    .header { padding: 16px; flex-direction: column; align-items: flex-start; gap: 16px; }
+    .header-right { width: 100%; justify-content: space-between; }
     .kpi-grid.row4, .kpi-grid.row5 { grid-template-columns: repeat(2,1fr); }
     td, th { padding: 12px 16px; }
   }
@@ -186,32 +180,37 @@
 <body>
 
 <div class="header">
-  <div class="header-top">
-    <div class="logo-area">
-      <div class="logo-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 13L2 9Z"/><path d="M11 3 8 9l4 13 4-13-3-6"/><path d="M2 9h20"/></svg>
-      </div>
-      <div class="logo-text">
-        <div class="logo-title">Traffic & Conversion Dashboard</div>
-        <div class="logo-sub">วิเคราะห์ประสิทธิภาพแคมเปญและเส้นทางของลูกค้า (Customer Journey)</div>
-      </div>
+  <div class="logo-area">
+    <div class="logo-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 13L2 9Z"/><path d="M11 3 8 9l4 13 4-13-3-6"/><path d="M2 9h20"/></svg>
     </div>
-    <div class="header-right">
-      <div class="date-badge" id="dataSourceLabel" style="display: flex; align-items: center; gap: 6px;"><span style="color:var(--accent)">●</span> แหล่งข้อมูล: ข้อมูลตัวอย่าง</div>
-      <button id="settingsBtn" class="btn-outline" style="padding:8px;display:flex;align-items:center;justify-content:center;border-radius:50%;width:36px;height:36px;" title="ตั้งค่า (Settings)">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-      </button>
+    <div class="logo-text">
+      <div class="logo-title">Website | Traffic Ads Performance</div>
+      <div class="logo-sub">วิเคราะห์ประสิทธิภาพแคมเปญและเส้นทางของลูกค้า (Customer Journey)</div>
     </div>
   </div>
-  <!-- Primary Navigation Platform Tabs -->
-  <div class="platform-tabs">
-    <button id="tab-facebook" class="platform-tab active" onclick="switchPlatform('facebook')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-      Facebook Ads
-    </button>
-    <button id="tab-google" class="platform-tab" onclick="switchPlatform('google')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>
-      Google Ads
+  <div class="header-right">
+    <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px;">
+      <select id="monthSelect" class="header-select" onchange="switchMonth(this.value)">
+        <option value="January">January</option>
+        <option value="February">February</option>
+        <option value="March">March</option>
+        <option value="April">April</option>
+        <option value="May">May</option>
+        <option value="June">June</option>
+        <option value="July">July</option>
+        <option value="August">August</option>
+        <option value="September">September</option>
+        <option value="October">October</option>
+        <option value="November">November</option>
+        <option value="December">December</option>
+      </select>
+      <div id="dataStatusLabel" style="display: flex; align-items: center; gap: 4px; font-size: 11px; color: var(--text-secondary); padding-right: 4px;">
+        <span style="color:var(--accent)">●</span> ไม่มีข้อมูล
+      </div>
+    </div>
+    <button id="settingsBtn" class="btn-outline" style="padding:8px;display:flex;align-items:center;justify-content:center;border-radius:50%;width:36px;height:36px;" title="ตั้งค่า (Settings)">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
     </button>
   </div>
 </div>
@@ -347,28 +346,14 @@
     <div style="border-top: 1px solid var(--border); margin: 24px 0;"></div>
 
     <div class="setting-group">
-      <div class="setting-label"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg> ข้อมูล Facebook Ads</div>
-      <div class="setting-desc">อัปโหลดไฟล์ (.csv หรือ .xlsx) สำหรับแพลตฟอร์ม Facebook</div>
+      <div class="setting-label"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> อัปโหลดข้อมูลแบบทำมือ (Manual)</div>
+      <div class="setting-desc">อัปโหลดไฟล์ (.csv หรือ .xlsx) เพื่อบังคับแสดงผลแทนข้อมูลเดือนที่เลือกอยู่ปัจจุบัน</div>
       <div style="display:flex;flex-direction:column;align-items:flex-start;gap:8px;">
-        <label class="upload-label" for="fbFileInput" style="width:100%; justify-content:center; padding: 10px 16px; font-size: 13px; transition: all 0.3s;">
+        <label class="upload-label" for="manualFileInput" style="width:100%; justify-content:center; padding: 10px 16px; font-size: 13px; transition: all 0.3s;">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-          อัปโหลดไฟล์ Traffic-Report
+          เลือกไฟล์รายงานใหม่
         </label>
-        <input type="file" id="fbFileInput" accept=".csv,.xlsx,.xls">
-      </div>
-    </div>
-
-    <div style="border-top: 1px solid var(--border); margin: 24px 0;"></div>
-
-    <div class="setting-group">
-      <div class="setting-label"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="var(--accent)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8"/><path d="M8 12h8"/></svg> ข้อมูล Google Ads</div>
-      <div class="setting-desc">อัปโหลดไฟล์ (.csv หรือ .xlsx) สำหรับแพลตฟอร์ม Google Ads</div>
-      <div style="display:flex;flex-direction:column;align-items:flex-start;gap:8px;">
-        <label class="upload-label" for="ggFileInput" style="width:100%; justify-content:center; padding: 10px 16px; font-size: 13px; transition: all 0.3s;">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-          อัปโหลดไฟล์ Google Report
-        </label>
-        <input type="file" id="ggFileInput" accept=".csv,.xlsx,.xls">
+        <input type="file" id="manualFileInput" accept=".csv,.xlsx,.xls">
       </div>
     </div>
 
@@ -380,15 +365,10 @@
 // กำหนด Header ทิ้งไว้เพื่อให้ระบบอ่านค่าได้ แต่ไม่มีข้อมูล (Row) ข้างใน
 const initialCSVData = `"Campaign name","Ad set name","Age","Gender","Amount spent (THB)","Reach","Impressions","Link clicks","Landing page views","Website adds to cart","Website purchases","Website purchases conversion value"`;
 
-let platformData = {
-  facebook: [],
-  google: []
-};
-let uploadedFiles = {
-  facebook: 'ไม่มีข้อมูล',
-  google: 'ไม่มีข้อมูล'
-};
-let currentPlatform = 'facebook';
+let monthCache = {}; // เก็บข้อมูลแต่ละเดือนไว้ เพื่อไม่ต้องโหลดใหม่ทุกครั้งที่กดสลับไปมา
+let currentMonth = 'January';
+let currentSource = 'ไม่มีข้อมูล';
+
 let allData = [];
 let filteredData = [];
 let charts = {};
@@ -400,74 +380,87 @@ window.updateDemoMetric = function() {
 };
 
 window.addEventListener('DOMContentLoaded', () => {
-    // กำหนด Path ของไฟล์ที่ต้องการดึงข้อมูลอัตโนมัติ (เปลี่ยนชื่อไฟล์ที่นี่ได้เลย)
-    const facebookDataPath = './data/facebook-data.csv'; 
-    const googleDataPath = './data/google-data.csv';
-
-    // ฟังก์ชันดึงข้อมูลจาก Path
-    async function fetchDataFromPath(path, platform) {
-      try {
-        const response = await fetch(path);
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        
-        const ext = path.split('.').pop().toLowerCase();
-        
-        if (ext === 'xlsx' || ext === 'xls') {
-          const arrayBuffer = await response.arrayBuffer();
-          const wb = XLSX.read(arrayBuffer, {type: 'array'});
-          const ws = wb.Sheets[wb.SheetNames[0]];
-          loadData(XLSX.utils.sheet_to_json(ws, {defval: 0}), platform, true);
-        } else {
-          // สันนิษฐานว่าเป็น CSV
-          const text = await response.text();
-          Papa.parse(text, {
-            header: true,
-            skipEmptyLines: true,
-            complete: function(results) {
-              loadData(results.data, platform, true);
-            }
-          });
-        }
-        
-        uploadedFiles[platform] = `ดึงอัตโนมัติ (${path})`;
-        if(platform === currentPlatform) updateSourceLabel();
-
-      } catch (error) {
-        console.warn(`ไม่พบไฟล์หรือโหลดไม่ได้จาก ${path}, กำลังกำหนดให้เป็นค่าว่าง`, error);
-        // Fallback: ใช้ค่าว่าง (initialCSVData ที่ไม่มี row) หากดึงไฟล์ไม่สำเร็จ
-        if(platform === 'facebook' || platform === 'google') {
-          Papa.parse(initialCSVData, {
-            header: true,
-            complete: function(results) {
-              loadData(results.data, platform, true); 
-            }
-          });
-        }
-      }
-    }
-
-    // เริ่มการดึงข้อมูลตอนโหลดหน้าเว็บ
-    fetchDataFromPath(facebookDataPath, 'facebook');
-    // fetchDataFromPath(googleDataPath, 'google'); // ยกเลิกคอมเมนต์บรรทัดนี้เมื่อมีไฟล์ของ Google
+    // เริ่มต้นระบบโดยการเลือกเดือนแรก (January)
+    switchMonth(currentMonth);
 });
 
-// Switch Platform Logic
-window.switchPlatform = function(platform) {
-  currentPlatform = platform;
-  document.querySelectorAll('.platform-tab').forEach(el => el.classList.remove('active'));
-  document.getElementById('tab-' + platform).classList.add('active');
+// ฟังก์ชันสลับเดือน
+window.switchMonth = async function(month) {
+  currentMonth = month;
   
-  allData = platformData[platform] || [];
-  clearFilters(); // This resets filters, copies allData to filteredData, and calls renderAll()
-  updateSourceLabel();
+  // อัปเดตค่า Dropdown
+  const monthSelect = document.getElementById('monthSelect');
+  if (monthSelect && monthSelect.value !== month) {
+      monthSelect.value = month;
+  }
+
+  // เคลียร์ฟิลเตอร์ก่อนเปลี่ยนเดือน
+  document.getElementById('filterCampaign').value = '';
+
+  // เช็กว่าเคยโหลดข้อมูลเดือนนี้มาแล้วหรือยัง
+  if (monthCache[month]) {
+      loadData(monthCache[month].data, false, monthCache[month].source);
+      return;
+  }
+
+  showStatus(`กำลังตรวจสอบไฟล์ข้อมูลของเดือน ${month}...`);
+
+  // ลองดึงไฟล์ CSV
+  let success = await tryFetchData(`./data/${month}.csv`, 'csv', month);
+  
+  // หากไม่เจอ ลองดึงไฟล์ XLSX
+  if (!success) {
+      success = await tryFetchData(`./data/${month}.xlsx`, 'xlsx', month);
+  }
+
+  // หากไม่เจอไฟล์เลย ให้สร้างตารางเปล่า
+  if (!success) {
+      Papa.parse(initialCSVData, {
+          header: true,
+          complete: function(results) {
+              loadData(results.data, true, ''); 
+          }
+      });
+      showStatus(`ℹ️ ไม่พบไฟล์ข้อมูลอัตโนมัติ (กรุณาอัปโหลดลงโฟลเดอร์ ./data/${month}.csv)`);
+  }
 };
 
+// ฟังก์ชันย่อยสำหรับพยายามดึงไฟล์
+async function tryFetchData(path, ext, month) {
+    try {
+        const response = await fetch(path);
+        if (!response.ok) return false;
+        
+        if (ext === 'xlsx' || ext === 'xls') {
+            const arrayBuffer = await response.arrayBuffer();
+            const wb = XLSX.read(arrayBuffer, {type: 'array'});
+            const ws = wb.Sheets[wb.SheetNames[0]];
+            const rawData = XLSX.utils.sheet_to_json(ws, {defval: 0});
+            monthCache[month] = { data: rawData, source: path };
+            loadData(rawData, false, path);
+        } else {
+            const text = await response.text();
+            Papa.parse(text, {
+                header: true,
+                skipEmptyLines: true,
+                complete: function(results) {
+                    monthCache[month] = { data: results.data, source: path };
+                    loadData(results.data, false, path);
+                }
+            });
+        }
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
 function updateSourceLabel() {
-  const sourceLabel = document.getElementById('dataSourceLabel');
+  const sourceLabel = document.getElementById('dataStatusLabel');
   if (sourceLabel) {
-    const isSampleOrEmpty = (uploadedFiles[currentPlatform] === 'ข้อมูลตัวอย่าง (FB)' || uploadedFiles[currentPlatform] === 'ไม่มีข้อมูล');
+    const isSampleOrEmpty = (currentSource === 'ไม่มีข้อมูล' || !currentSource);
     const color = isSampleOrEmpty ? 'var(--accent)' : 'var(--emerald)';
-    sourceLabel.innerHTML = `<span style="color:${color}">●</span> แหล่งข้อมูล: ${uploadedFiles[currentPlatform]}`;
+    sourceLabel.innerHTML = `<span style="color:${color}">●</span> ${currentSource || 'ไม่มีข้อมูล'}`;
   }
 }
 
@@ -867,16 +860,12 @@ function clearFilters() {
   renderAll();
 }
 
-function handleFileUpload(e, platform) {
+function handleManualFileUpload(e) {
   const file = e.target.files[0]; 
   if (!file) return;
   const ext = file.name.split('.').pop().toLowerCase();
+  const sourceName = `อัปโหลดเอง (${file.name})`;
   
-  uploadedFiles[platform] = file.name;
-  if (platform === currentPlatform) {
-    updateSourceLabel();
-  }
-
   try {
     if (ext === 'xlsx' || ext === 'xls') {
       const reader = new FileReader();
@@ -884,7 +873,9 @@ function handleFileUpload(e, platform) {
         try {
           const wb = XLSX.read(ev.target.result, {type:'array'}); 
           const ws = wb.Sheets[wb.SheetNames[0]]; 
-          loadData(XLSX.utils.sheet_to_json(ws,{defval:0}), platform); 
+          const rawData = XLSX.utils.sheet_to_json(ws,{defval:0});
+          monthCache[currentMonth] = { data: rawData, source: sourceName };
+          loadData(rawData, false, sourceName); 
         } catch(err) {
           showStatus('❌ ไม่สามารถอ่านไฟล์ Excel ได้ หรือไฟล์เสียหาย');
         }
@@ -894,7 +885,10 @@ function handleFileUpload(e, platform) {
       Papa.parse(file, {
         header:true, 
         skipEmptyLines:true, 
-        complete: r => loadData(r.data, platform),
+        complete: r => {
+            monthCache[currentMonth] = { data: r.data, source: sourceName };
+            loadData(r.data, false, sourceName);
+        },
         error: err => showStatus('❌ เกิดข้อผิดพลาดในการอ่านไฟล์ CSV')
       });
     }
@@ -903,10 +897,9 @@ function handleFileUpload(e, platform) {
   }
 }
 
-document.getElementById('fbFileInput')?.addEventListener('change', (e) => handleFileUpload(e, 'facebook'));
-document.getElementById('ggFileInput')?.addEventListener('change', (e) => handleFileUpload(e, 'google'));
+document.getElementById('manualFileInput')?.addEventListener('change', handleManualFileUpload);
 
-function loadData(rows, platform, isInitial = false) {
+function loadData(rows, isInitial = false, sourceName = '') {
   try {
     // Parser is generic enough to handle common FB/Google headers
     const parsedData = rows.map(r => ({
@@ -924,18 +917,21 @@ function loadData(rows, platform, isInitial = false) {
       convValue: parseFloat(r['Website purchases conversion value'] || r['Conv. value'] || 0) || 0
     })).filter(r => r.campaign || r.ad);
     
-    platformData[platform] = parsedData;
+    allData = parsedData;
+    filteredData = [...allData];
     
-    if (platform === currentPlatform) {
-      allData = platformData[platform];
-      filteredData = [...allData];
-      populateFilters();
-      renderAll();
+    if (sourceName) {
+        currentSource = sourceName;
+    } else if (isInitial) {
+        currentSource = 'ไม่มีข้อมูล';
     }
+
+    populateFilters();
+    updateSourceLabel();
+    renderAll();
     
     if (!isInitial) {
-      showStatus(`✅ โหลดข้อมูล ${platform.toUpperCase()} สำเร็จ: ${parsedData.length} แถว`);
-      // Update UI timestamp if needed (optional)
+      showStatus(`✅ โหลดข้อมูลสำเร็จ: ${parsedData.length} แถว`);
     }
   } catch(e) { 
     if(!isInitial) showStatus('❌ เกิดข้อผิดพลาดในการอ่านไฟล์: '+e.message); 
