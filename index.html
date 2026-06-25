@@ -41,7 +41,6 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: var(--bg); color: var(--text); font-family: 'Inter','Noto Sans Thai',sans-serif; min-height: 100vh; line-height: 1.5; }
 
-    /* Header & Navigation */
     .header { background: var(--card); border-bottom: 1px solid var(--border); padding: 16px 32px 0 32px; display: flex; flex-direction: column; position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow-sm); }
     .header-top { display: flex; align-items: center; justify-content: space-between; padding-bottom: 16px; width: 100%; }
     .logo-area { display: flex; align-items: center; gap: 16px; }
@@ -78,11 +77,12 @@
     .clear-btn { background: transparent; border: 1px solid transparent; border-radius: 8px; color: var(--muted); padding: 8px 12px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all .2s; }
     .clear-btn:hover { color: var(--text); background: var(--surface); border-color: var(--border); }
 
-    /* KPIs */
     .kpi-group-label { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 16px; margin-top: 16px; }
     .kpi-grid { display: grid; gap: 16px; margin-bottom: 8px; }
+    .kpi-grid.row3 { grid-template-columns: repeat(3,1fr); }
     .kpi-grid.row4 { grid-template-columns: repeat(4,1fr); }
     .kpi-grid.row5 { grid-template-columns: repeat(5,1fr); }
+    .kpi-grid.row6 { grid-template-columns: repeat(6,1fr); }
     .kpi-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; box-shadow: var(--shadow-sm); display: grid; grid-template-areas: "label icon" "value icon" "sub sub" "bench bench"; grid-template-columns: 1fr auto; align-items: start; transition: transform .2s, box-shadow .2s; }
     .kpi-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
     .kpi-icon { grid-area: icon; width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
@@ -98,7 +98,6 @@
     .kpi-diff.bad { background: rgba(244,63,94,0.1); color: #F43F5E; }
     .kpi-diff.neutral { background: var(--surface); color: var(--muted); border: 1px solid var(--border); }
 
-    /* Layout & Charts */
     .dashboard-layout { display: flex; flex-direction: column; gap: 24px; margin-top: 24px; }
     .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
     .chart-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; box-shadow: var(--shadow-sm); }
@@ -124,7 +123,6 @@
     .pyramid-badge { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--card); font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 20px; border: 1px solid var(--border); box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 4px; z-index: 10; white-space: nowrap; }
     .pyramid-badge svg { color: inherit; width: 12px; height: 12px; }
 
-    /* Table */
     .table-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 0; box-shadow: var(--shadow-sm); overflow: hidden; margin-top: 24px; }
     .table-header { padding: 24px 24px 0; display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
     .table-responsive { width: 100%; overflow-x: auto; }
@@ -175,12 +173,12 @@
     .header-top { flex-direction: column; align-items: flex-start; gap: 16px; padding-bottom: 12px; }
     .header-right { width: 100%; justify-content: space-between; }
     .platform-tabs { width: 100%; overflow-x: auto; gap: 16px; }
-    .kpi-grid.row4, .kpi-grid.row5 { grid-template-columns: repeat(2,1fr); }
+    .kpi-grid.row3, .kpi-grid.row4, .kpi-grid.row5, .kpi-grid.row6 { grid-template-columns: repeat(2,1fr); }
     .trend-grid { grid-template-columns: 1fr; }
     td, th { padding: 12px 16px; }
   }
   @media (max-width: 600px) {
-    .kpi-grid.row4, .kpi-grid.row5 { grid-template-columns: 1fr; }
+    .kpi-grid.row3, .kpi-grid.row4, .kpi-grid.row5, .kpi-grid.row6 { grid-template-columns: 1fr; }
     .pyramid-step { width: 100% !important; }
   }
 </style>
@@ -219,7 +217,7 @@
         </div>
       </div>
       <button id="settingsBtn" class="btn-outline" style="padding:8px;display:flex;align-items:center;justify-content:center;border-radius:50%;width:36px;height:36px;" title="ตั้งค่า (Settings)">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
       </button>
     </div>
   </div>
@@ -306,7 +304,7 @@
           <div class="chart-sub">แนวโน้มประสิทธิภาพโฆษณารายเดือน (มกราคม - ธันวาคม)</div>
           <div class="trend-grid">
             <div>
-                <div style="font-size: 13px; font-weight: 600; text-align: center; margin-bottom: 8px; color: var(--text);">1. Spending vs. Conversion Value</div>
+                <div style="font-size: 13px; font-weight: 600; text-align: center; margin-bottom: 8px; color: var(--text);">1. Spending vs. Link Clicks</div>
                 <div class="chart-wrap" style="height: 250px;"><canvas id="trendChart1"></canvas></div>
             </div>
             <div>
@@ -405,7 +403,6 @@
 </div>
 
 <script>
-// ─── DATA & INIT ──────────────────────────────
 const initialCSVData = `"Campaign name","Ad set name","Age","Gender","Amount spent (THB)","Reach","Impressions","Link clicks","Landing page views","Website adds to cart","Website purchases","Website purchases conversion value"`;
 
 let currentPlatform = 'facebook';
@@ -423,8 +420,8 @@ let monthCache = { facebook: {}, google: {} };
 let trendDataCache = { facebook: {}, google: {} };
 
 ALL_MONTHS.forEach(m => {
-    trendDataCache.facebook[m] = { spend:0, convValue:0, purchases:0, clicks:0, reach:0, impressions:0 };
-    trendDataCache.google[m] = { spend:0, convValue:0, purchases:0, clicks:0, reach:0, impressions:0 };
+    trendDataCache.facebook[m] = { spend:0, convValue:0, purchases:0, clicks:0, reach:0, impressions:0, lpViews:0 };
+    trendDataCache.google[m] = { spend:0, convValue:0, purchases:0, clicks:0, reach:0, impressions:0, lpViews:0 };
 });
 
 let allData = [];
@@ -554,7 +551,8 @@ async function fetchAllMonthsForTrend(platform) {
                     purchases: parseInt(r['Website purchases'] || r['Conversions'] || 0) || 0,
                     clicks: parseInt(r['Link clicks'] || r['Clicks'] || 0) || 0,
                     reach: parseInt(r['Reach'] || r['Unique users'] || 0) || 0,
-                    impressions: parseInt(r['Impressions'] || r['Impr.'] || 0) || 0
+                    impressions: parseInt(r['Impressions'] || r['Impr.'] || 0) || 0,
+                    lpViews: parseInt(r['Landing page views'] || 0) || 0
                 }));
                 updateTrendDataForMonth(m, parsedData, platform, false);
             }
@@ -565,7 +563,7 @@ async function fetchAllMonthsForTrend(platform) {
 }
 
 function updateTrendDataForMonth(month, parsedData, platform = currentPlatform, reRender = true) {
-    trendDataCache[platform][month] = { spend:0, convValue:0, purchases:0, clicks:0, reach:0, impressions:0 };
+    trendDataCache[platform][month] = { spend:0, convValue:0, purchases:0, clicks:0, reach:0, impressions:0, lpViews:0 };
     parsedData.forEach(r => {
         trendDataCache[platform][month].spend += r.spend || 0;
         trendDataCache[platform][month].convValue += r.convValue || 0;
@@ -573,6 +571,7 @@ function updateTrendDataForMonth(month, parsedData, platform = currentPlatform, 
         trendDataCache[platform][month].clicks += r.clicks || 0;
         trendDataCache[platform][month].reach += r.reach || 0;
         trendDataCache[platform][month].impressions += r.impressions || 0;
+        trendDataCache[platform][month].lpViews += r.lpViews || 0;
     });
     if(reRender) renderTrendCharts();
 }
@@ -584,6 +583,7 @@ function renderTrendCharts() {
     const spends = ALL_MONTHS.map(m => tCache[m].spend);
     const convVals = ALL_MONTHS.map(m => tCache[m].convValue);
     const purchases = ALL_MONTHS.map(m => tCache[m].purchases);
+    const clicks = ALL_MONTHS.map(m => tCache[m].clicks);
     const cpcs = ALL_MONTHS.map(m => tCache[m].clicks > 0 ? tCache[m].spend / tCache[m].clicks : 0);
     const crs = ALL_MONTHS.map(m => tCache[m].clicks > 0 ? (tCache[m].purchases / tCache[m].clicks)*100 : 0);
     const roases = ALL_MONTHS.map(m => tCache[m].spend > 0 ? tCache[m].convValue / tCache[m].spend : 0);
@@ -613,8 +613,8 @@ function renderTrendCharts() {
         type: 'bar',
         data: { labels, datasets: [
             { label: 'Spending', data: spends, backgroundColor: '#3B82F6', yAxisID: 'y', borderRadius: 4, order: 2 },
-            { label: 'Conv. Value', data: convVals, type: 'line', borderColor: '#10B981', backgroundColor: '#10B981', yAxisID: 'y1', tension: 0.3, borderWidth: 2, order: 1 }
-        ]}, options: dualOpts('Spending (฿)', 'Conv. Value (฿)')
+            { label: 'Link Clicks', data: clicks, type: 'line', borderColor: '#06B6D4', backgroundColor: '#06B6D4', yAxisID: 'y1', tension: 0.3, borderWidth: 2, order: 1 }
+        ]}, options: dualOpts('Spending (฿)', 'Link Clicks')
     });
 
     charts.trend2 = new Chart(document.getElementById('trendChart2'), {
@@ -654,7 +654,6 @@ function updateSourceLabel() {
 function destroyCharts() { 
   if(charts.demo) charts.demo.destroy();
   if(charts.adPie) charts.adPie.destroy();
-  // trend charts handle their own destruction
 }
 
 function formatCurrency(n) { return new Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(n); }
@@ -675,30 +674,37 @@ function renderKPIs() {
   const reach = d.reduce((s,r)=>s+r.reach,0);
   const impressions = d.reduce((s,r)=>s+r.impressions,0);
   const clicks = d.reduce((s,r)=>s+r.clicks,0);
+  const lpViews = d.reduce((s,r)=>s+r.lpViews,0);
 
   // Cost Efficiency Metrics
   const cpr = reach > 0 ? (spend / reach) * 1000 : 0;
   const cpm = impressions > 0 ? (spend / impressions) * 1000 : 0;
   const cpc = clicks > 0 ? spend / clicks : 0;
+  const ctr = impressions > 0 ? (clicks / impressions) * 100 : 0;
   const freq = reach > 0 ? impressions / reach : 0;
+  const cplpv = lpViews > 0 ? spend / lpViews : 0;
 
   // Comparison Logic (Previous Month)
   const prevMonthIndex = ALL_MONTHS.indexOf(currentMonth) - 1;
   const prevMonth = prevMonthIndex >= 0 ? ALL_MONTHS[prevMonthIndex] : null;
   const prevData = prevMonth ? trendDataCache[currentPlatform][prevMonth] : null;
   
-  let pSpend = 0, pReach = 0, pImpr = 0, pClicks = 0;
-  let pCpr = 0, pCpm = 0, pCpc = 0, pFreq = 0;
+  let pSpend = 0, pReach = 0, pImpr = 0, pClicks = 0, pLpViews = 0;
+  let pCpr = 0, pCpm = 0, pCpc = 0, pFreq = 0, pCtr = 0, pCplpv = 0;
 
   if (prevData) {
       pSpend = prevData.spend;
       pReach = prevData.reach;
       pImpr = prevData.impressions;
       pClicks = prevData.clicks;
+      pLpViews = prevData.lpViews || 0;
+      
       pCpr = pReach > 0 ? (pSpend / pReach) * 1000 : 0;
       pCpm = pImpr > 0 ? (pSpend / pImpr) * 1000 : 0;
       pCpc = pClicks > 0 ? pSpend / pClicks : 0;
       pFreq = pReach > 0 ? pImpr / pReach : 0;
+      pCtr = pImpr > 0 ? (pClicks / pImpr) * 100 : 0;
+      pCplpv = pLpViews > 0 ? pSpend / pLpViews : 0;
   }
 
   // Helper เพื่อคำนวณและแสดง HTML ของ % Change
@@ -730,34 +736,61 @@ function renderKPIs() {
   const iconReach = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>';
   const iconImpr = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
   const iconClick = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>';
+  const iconLpViews = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>';
   const iconCPR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg>';
   const iconCPM = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>';
   const iconCPC = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/><path d="m15 15 6 6"/></svg>';
+  const iconCTR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="m16 8-8 8"/><path d="M9 9h.01"/><path d="M15 15h.01"/></svg>';
   const iconFreq = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>';
 
-  // Overview Category
-  const overviewKPIs = [
-    card(iconSpend, 'Spending', formatCurrency(spend), getDiffHtml(spend, pSpend), 'Amount spent (THB)', 'var(--blue)'),
-    card(iconReach, 'Reach', formatNum(reach), getDiffHtml(reach, pReach), 'Unique people reached', 'var(--emerald)'),
-    card(iconImpr, 'Impressions', formatNum(impressions), getDiffHtml(impressions, pImpr), 'Total ad impressions', 'var(--purple)'),
-    card(iconClick, 'Link Clicks', formatNum(clicks), getDiffHtml(clicks, pClicks), 'Total Link clicks', 'var(--accent)')
-  ];
+  let overviewKPIs = [];
+  let costKPIs = [];
+  let rowClassOverview = 'row4';
+  let rowClassCost = 'row4';
 
-  // Cost Efficiency Category (Reverse colors: Higher Cost = Bad/Red, Lower Cost = Good/Green)
-  const costKPIs = [
-    card(iconCPR, 'CPR', '฿' + cpr.toFixed(2), getDiffHtml(cpr, pCpr, true), 'ต้นทุนต่อการเข้าถึงพันคน', 'var(--emerald)', '฿30 - ฿100'),
-    card(iconCPM, 'CPM', '฿' + cpm.toFixed(2), getDiffHtml(cpm, pCpm, true), 'ต้นทุนต่อการแสดงผลพันครั้ง', 'var(--blue)', '฿25 - ฿80'),
-    card(iconCPC, 'CPC', '฿' + cpc.toFixed(2), getDiffHtml(cpc, pCpc, true), 'ต้นทุนเฉลี่ยต่อการคลิก', 'var(--purple)', '฿3 - ฿15'),
-    card(iconFreq, 'Frequency', freq.toFixed(2), getDiffHtml(freq, pFreq, true), 'ความถี่เฉลี่ยต่อคน', 'var(--accent)', '1.5 - 3.0')
-  ];
+  if (currentPlatform === 'facebook') {
+    // การแสดงผลสำหรับ Facebook: Overview 5 คอลัมน์ | Cost 6 คอลัมน์ในบรรทัดเดียว
+    rowClassOverview = 'row5';
+    rowClassCost = 'row6'; 
+    
+    overviewKPIs = [
+      card(iconSpend, 'Spending', formatCurrency(spend), getDiffHtml(spend, pSpend), 'Amount spent (THB)', 'var(--blue)'),
+      card(iconReach, 'Reach', formatNum(reach), getDiffHtml(reach, pReach), 'Unique people reached', 'var(--emerald)'),
+      card(iconImpr, 'Impressions', formatNum(impressions), getDiffHtml(impressions, pImpr), 'Total ad impressions', 'var(--purple)'),
+      card(iconClick, 'Link Clicks', formatNum(clicks), getDiffHtml(clicks, pClicks), 'Total Link clicks', 'var(--accent)'),
+      card(iconLpViews, 'LP Views', formatNum(lpViews), getDiffHtml(lpViews, pLpViews), 'Landing Page Views', '#8B5CF6')
+    ];
+    costKPIs = [
+      card(iconCPR, 'CPR', '฿' + cpr.toFixed(2), getDiffHtml(cpr, pCpr, true), 'ต้นทุนต่อการเข้าถึงพันคน', 'var(--emerald)', '฿30 - ฿100'),
+      card(iconCPM, 'CPM', '฿' + cpm.toFixed(2), getDiffHtml(cpm, pCpm, true), 'ต้นทุนต่อการแสดงผลพันครั้ง', 'var(--blue)', '฿25 - ฿80'),
+      card(iconCPC, 'CPC', '฿' + cpc.toFixed(2), getDiffHtml(cpc, pCpc, true), 'ต้นทุนเฉลี่ยต่อการคลิก', 'var(--purple)', '฿3 - ฿15'),
+      card(iconLpViews, 'Cost per LP View', '฿' + cplpv.toFixed(2), getDiffHtml(cplpv, pCplpv, true), 'ต้นทุนต่อการเข้าชมเว็บไซต์', '#8B5CF6', '฿5 - ฿25'),
+      card(iconCTR, 'CTR', ctr.toFixed(2) + '%', getDiffHtml(ctr, pCtr), 'Click-Through Rate', '#f97316', '1.0% - 3.0%'),
+      card(iconFreq, 'Frequency', freq.toFixed(2), getDiffHtml(freq, pFreq, true), 'ความถี่เฉลี่ยต่อคน', 'var(--accent)', '1.5 - 3.0')
+    ];
+  } else if (currentPlatform === 'google') {
+    // การแสดงผลสำหรับ Google Ads (3 กล่องต่อแถว)
+    rowClassOverview = 'row3';
+    rowClassCost = 'row3';
+    overviewKPIs = [
+      card(iconSpend, 'Spending', formatCurrency(spend), getDiffHtml(spend, pSpend), 'Amount spent (THB)', 'var(--blue)'),
+      card(iconImpr, 'Impressions', formatNum(impressions), getDiffHtml(impressions, pImpr), 'Total ad impressions', 'var(--purple)'),
+      card(iconClick, 'Clicks', formatNum(clicks), getDiffHtml(clicks, pClicks), 'Total clicks', 'var(--accent)')
+    ];
+    costKPIs = [
+      card(iconCPM, 'CPM', '฿' + cpm.toFixed(2), getDiffHtml(cpm, pCpm, true), 'Cost per 1,000 Impressions', 'var(--blue)', '฿20 - ฿80'),
+      card(iconCPC, 'CPC', '฿' + cpc.toFixed(2), getDiffHtml(cpc, pCpc, true), 'Cost per Click', 'var(--purple)', '฿2 - ฿15'),
+      card(iconCTR, 'CTR', ctr.toFixed(2) + '%', getDiffHtml(ctr, pCtr), 'Click-Through Rate', '#f97316', '1.0% - 5.0%')
+    ];
+  }
 
   document.getElementById('kpiSection').innerHTML = `
     <div class="kpi-group-label">Overview</div>
-    <div class="kpi-grid row4" style="margin-bottom: 24px;">${overviewKPIs.join('')}</div>
+    <div class="kpi-grid ${rowClassOverview}" style="margin-bottom: 24px;">${overviewKPIs.join('')}</div>
     <div class="kpi-group-label">Cost Efficiency</div>
-    <div class="kpi-grid row4">${costKPIs.join('')}</div>
+    <div class="kpi-grid ${rowClassCost}">${costKPIs.join('')}</div>
     <div style="text-align: right; font-size: 11px; color: var(--muted); margin-top: 8px;">
-      Benchmark ref: Meta Business Suite / E-commerce Industry Average (Thailand)
+      Benchmark ref: E-commerce Industry Average (Thailand)
     </div>
   `;
 }
@@ -963,6 +996,28 @@ function renderCharts() {
     const demoSumEl = document.getElementById('demoSummary');
     if(demoSumEl) demoSumEl.style.display = 'none';
   }
+
+  // Ad Pie Chart - Spend by Ad
+  if(charts.adPie) charts.adPie.destroy();
+  const sortedAdSpend = Object.entries(adStats).sort((a,b)=>b[1].spend-a[1].spend);
+  const adLabels = sortedAdSpend.map(item => item[0]);
+  const adData = sortedAdSpend.map(item => item[1].spend);
+
+  charts.adPie = new Chart(document.getElementById('adPieChart'), {
+    type: 'doughnut',
+    data: {
+      labels: adLabels,
+      datasets: [{
+        data: adData,
+        backgroundColor: adLabels.map((_, i) => COLORS[i % COLORS.length]),
+        borderWidth: 2, borderColor: isDark ? '#1E293B' : '#FFF', hoverOffset: 8
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, cutout: '50%',
+      plugins: { legend: { position: 'right', labels: { color: textColor, font: { family: 'Inter,Noto Sans Thai', size: 11 } } } }
+    }
+  });
 }
 
 // ─── TABLE ─────────────────────────────────
